@@ -6,6 +6,8 @@ public class ParticlesLauncher : MonoBehaviour
 {
     private ParticleSystem particles;
 
+    private const string WaterZoneTag = "water";
+
     private void Awake()
     {
         DeathZone.OnDead += PlayEffect;
@@ -18,7 +20,7 @@ public class ParticlesLauncher : MonoBehaviour
 
     private void PlayEffect(string zoneTag)
     {
-        if (zoneTag == "water")
+        if (zoneTag == WaterZoneTag)
         {
             particles.Play();
         }

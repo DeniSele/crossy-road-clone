@@ -21,6 +21,10 @@ public class PlayerController : MonoBehaviour
     private Vector3 startingPosition;
     private bool isDead = false;
 
+    private const string CarObjectTag = "Car";
+    private const string LogObjectTag = "Log";
+    private const string WaterObjectTag = "Water";
+
     public static event Action<Vector3> OnJump = delegate { };
     public static event Action<Vector3> OnLog = delegate { };
 
@@ -111,7 +115,7 @@ public class PlayerController : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(transform.position, Vector3.down, out hit, 1f))
         {
-            if(hit.transform.gameObject.tag == "Log")
+            if(hit.transform.gameObject.CompareTag(LogObjectTag))
             {
                 transform.SetParent(hit.transform);
             }
@@ -120,9 +124,9 @@ public class PlayerController : MonoBehaviour
                 transform.SetParent(null);
             }
 
-            if (hit.transform.gameObject.tag == "Water")
+            if (hit.transform.gameObject.CompareTag(WaterObjectTag))
             {
-                DeathZone.InvokeDeadEvent();
+                DeathZone.InvokeDeadByWaterEvent();
             }
         }
     }
@@ -132,7 +136,7 @@ public class PlayerController : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(transform.position, direction, out hit, 1f))
         {
-            if(hit.transform.gameObject.tag == "Car")
+            if(hit.transform.gameObject.CompareTag(CarObjectTag))
             {
                 return false;
             }

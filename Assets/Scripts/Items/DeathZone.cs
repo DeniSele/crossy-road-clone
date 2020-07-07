@@ -8,13 +8,16 @@ public class DeathZone : MonoBehaviour
     [SerializeField]
     private string zoneTag = "default";
     private static bool isDead = false;
-    
+
+    private const string PlayerTag = "Player";
+    private const string WaterZoneTag = "water";
+
     public static event Action<string> OnDead = delegate { };
 
-    public static void InvokeDeadEvent()
+    public static void InvokeDeadByWaterEvent()
     {
         isDead = true;
-        OnDead("water");
+        OnDead(WaterZoneTag);
     }
 
     private void Awake()
@@ -29,7 +32,7 @@ public class DeathZone : MonoBehaviour
 
     private void OnTriggerEnter(Collider collision)
     {
-        if(!isDead && collision.gameObject.tag == "Player")
+        if(!isDead && collision.gameObject.CompareTag(PlayerTag))
         {
             isDead = true;
             OnDead(zoneTag);
